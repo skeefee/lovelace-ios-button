@@ -69,10 +69,12 @@ icon_color: var(--primary-text-color)
 active_icon_color: var(--accent-color)
 show_name: true
 show_icon: true
-interactions:
-  tap_behaviour: toggle
-  hold_behaviour: turn_off
-  double_tap_behaviour: turn_on
+tap_action:
+  action: toggle
+hold_action:
+  action: turn_off
+double_tap_action:
+  action: turn_on
 ```
 
 ### Configuration Options
@@ -98,9 +100,9 @@ interactions:
 
 | Option | Type | Values | Description |
 |--------|------|--------|-------------|
-| `tap_behaviour` | `string` | `toggle`, `turn_on`, `turn_off` | Action when tapped |
-| `hold_behaviour` | `string` | `toggle`, `turn_on`, `turn_off`, `""` | Action when held (500ms+) |
-| `double_tap_behaviour` | `string` | `toggle`, `turn_on`, `turn_off`, `""` | Action when double-tapped |
+| `tap_action.action` | `string` | `toggle`, `turn_on`, `turn_off`, `more-info`, `none` | Action when tapped |
+| `hold_action.action` | `string` | `toggle`, `turn_on`, `turn_off`, `more-info`, `none` | Action when held (500ms+) |
+| `double_tap_action.action` | `string` | `toggle`, `turn_on`, `turn_off`, `more-info`, `none` | Action when double-tapped |
 
 ## Usage Examples
 
@@ -113,10 +115,12 @@ title: Bedroom Lamp
 icon: mdi:lamp
 show_name: true
 show_icon: true
-interactions:
-  tap_behaviour: toggle
-  hold_behaviour: turn_off
-  double_tap_behaviour: ""
+tap_action:
+  action: toggle
+hold_action:
+  action: turn_off
+double_tap_action:
+  action: none
 ```
 
 ### Switch Control
@@ -137,10 +141,12 @@ type: ios-button-card
 entity: climate.living_room
 title: AC Unit
 icon: mdi:thermostat
-interactions:
-  tap_behaviour: toggle
-  hold_behaviour: turn_on
-  double_tap_behaviour: turn_off
+tap_action:
+  action: toggle
+hold_action:
+  action: turn_on
+double_tap_action:
+  action: turn_off
 ```
 
 ### Fan Control

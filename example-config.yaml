@@ -22,10 +22,12 @@
   active_icon_color: '#FFD700'
   show_name: true
   show_icon: true
-  interactions:
-    tap_behaviour: turn_on
-    hold_behaviour: turn_off
-    double_tap_behaviour: ''
+  tap_action:
+    action: turn_on
+  hold_action:
+    action: turn_off
+  double_tap_action:
+    action: none
 
 # ============================================================================
 # Example 3: Advanced Interactions
@@ -38,10 +40,12 @@
   active_icon_color: '#FF6B6B'
   show_name: true
   show_icon: true
-  interactions:
-    tap_behaviour: toggle
-    hold_behaviour: turn_off
-    double_tap_behaviour: turn_on
+  tap_action:
+    action: toggle
+  hold_action:
+    action: turn_off
+  double_tap_action:
+    action: turn_on
 
 # ============================================================================
 # Example 4: Icon Only (No Text)
@@ -51,10 +55,12 @@
   icon: mdi:fan
   show_name: false
   show_icon: true
-  interactions:
-    tap_behaviour: toggle
-    hold_behaviour: ''
-    double_tap_behaviour: ''
+  tap_action:
+    action: toggle
+  hold_action:
+    action: none
+  double_tap_action:
+    action: none
 
 # ============================================================================
 # Example 5: Text Only (No Icon)
@@ -64,10 +70,8 @@
   title: Garage Door
   show_name: true
   show_icon: false
-  interactions:
-    tap_behaviour: toggle
-    hold_behaviour: ''
-    double_tap_behaviour: ''
+  tap_action:
+    action: toggle
 
 # ============================================================================
 # Example 6: Climate Control
@@ -80,10 +84,12 @@
   active_icon_color: '#FF4757'
   show_name: true
   show_icon: true
-  interactions:
-    tap_behaviour: toggle
-    hold_behaviour: turn_on
-    double_tap_behaviour: turn_off
+  tap_action:
+    action: toggle
+  hold_action:
+    action: turn_on
+  double_tap_action:
+    action: turn_off
 
 # ============================================================================
 # Example 7: Security Lock
@@ -96,13 +102,13 @@
   active_icon_color: '#27AE60'
   show_name: true
   show_icon: true
-  interactions:
-    tap_behaviour: toggle
-    hold_behaviour: ''
-    double_tap_behaviour: ''
+  tap_action:
+    action: toggle
+  hold_action:
+    action: more-info
 
 # ============================================================================
-# Example 8: Camera
+# Example 8: Camera (More Info on tap)
 # ============================================================================
 - type: ios-button-card
   entity: camera.porch
@@ -112,6 +118,8 @@
   active_icon_color: '#E74C3C'
   show_name: true
   show_icon: true
+  tap_action:
+    action: more-info
 
 # ============================================================================
 # Example 9: Media Control
@@ -124,10 +132,8 @@
   active_icon_color: '#E74C3C'
   show_name: true
   show_icon: true
-  interactions:
-    tap_behaviour: toggle
-    hold_behaviour: ''
-    double_tap_behaviour: ''
+  tap_action:
+    action: toggle
 
 # ============================================================================
 # Example 10: Grid Layout (4 buttons in a row)
@@ -192,7 +198,7 @@
   show_icon: true
 
 # ============================================================================
-# Example 14: No Interactions (Display Only)
+# Example 14: Display Only (no actions)
 # ============================================================================
 - type: ios-button-card
   entity: sensor.temperature
@@ -200,7 +206,9 @@
   icon: mdi:thermometer
   show_name: true
   show_icon: true
-  interactions:
-    tap_behaviour: ''
-    hold_behaviour: ''
-    double_tap_behaviour: ''
+  tap_action:
+    action: none
+  hold_action:
+    action: none
+  double_tap_action:
+    action: none

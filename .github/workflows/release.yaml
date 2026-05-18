@@ -23,6 +23,6 @@ jobs:
       - run: npm run build
 
       - name: Upload dist to release
-        run: gh release upload ${{ github.ref_name }} dist/ios-button-card.js
+        run: gh release upload ${{ github.ref_name }} dist/ios-button-card.js dist/ios-button-card-editor.js
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,4 @@
 import { LitElement, html, css } from 'lit-element';
-import './custom-button-card-editor.js';
 
 class CustomButtonCard extends LitElement {
   static get properties() {
@@ -205,8 +204,8 @@ class CustomButtonCard extends LitElement {
 
   _handleMouseDown() {
     this._pressTimer = setTimeout(() => {
-      if (this.config.interactions?.hold_behaviour) {
-        this._executeAction(this.config.interactions.hold_behaviour);
+      if (this.config.hold_action?.action) {
+        this._executeAction(this.config.hold_action);
       }
     }, 500);
   }
@@ -239,14 +238,14 @@ class CustomButtonCard extends LitElement {
 
     this._tapTimer = setTimeout(() => {
       if (this._tapCount === 1) {
-        if (this.config.interactions?.tap_behaviour) {
-          this._executeAction(this.config.interactions.tap_behaviour);
+        if (this.config.tap_action?.action) {
+          this._executeAction(this.config.tap_action);
         } else {
           this._toggleEntity();
         }
       } else if (this._tapCount === 2) {
-        if (this.config.interactions?.double_tap_behaviour) {
-          this._executeAction(this.config.interactions.double_tap_behaviour);
+        if (this.config.double_tap_action?.action) {
+          this._executeAction(this.config.double_tap_action);
         }
       }
       this._tapCount = 0;
@@ -265,8 +264,8 @@ class CustomButtonCard extends LitElement {
 
   _handleTouchStart() {
     this._pressTimer = setTimeout(() => {
-      if (this.config.interactions?.hold_behaviour) {
-        this._executeAction(this.config.interactions.hold_behaviour);
+      if (this.config.hold_action?.action) {
+        this._executeAction(this.config.hold_action);
       }
     }, 500);
   }
@@ -285,21 +284,25 @@ class CustomButtonCard extends LitElement {
     });
   }
 
-  _executeAction(action) {
-    if (typeof action === 'string') {
-      if (action === 'toggle') {
-        this._toggleEntity();
-      } else if (action === 'turn_on') {
-        this.hass.callService('homeassistant', 'turn_on', {
-          entity_id: this.config.entity
-        });
-      } else if (action === 'turn_off') {
-        this.hass.callService('homeassistant', 'turn_off', {
-          entity_id: this.config.entity
-        });
-      }
-    } else if (typeof action === 'object' && action.action) {
-      this.hass.callService(action.service, action.action, action.data || {});
+  _executeAction(actionConfig) {
+    const action = actionConfig?.action;
+    if (!action || action === 'none') return;
+
+    if (action === 'toggle') {
+      this._toggleEntity();
+    } else if (action === 'turn_on') {
+      this.hass.callService('homeassistant', 'turn_on', { entity_id: this.config.entity });
+    } else if (action === 'turn_off') {
+      this.hass.callService('homeassistant', 'turn_off', { entity_id: this.config.entity });
+    } else if (action === 'more-info') {
+      this.dispatchEvent(new CustomEvent('hass-more-info', {
+        detail: { entityId: this.config.entity },
+        bubbles: true,
+        composed: true
+      }));
+    } else if (action === 'call-service' && actionConfig.service) {
+      const [domain, service] = actionConfig.service.split('.');
+      this.hass.callService(domain, service, actionConfig.service_data || {});
     }
   }
 
@@ -311,6 +314,9 @@ class CustomButtonCard extends LitElement {
       cover: 'mdi:window-closed',
       climate: 'mdi:thermostat',
       fan: 'mdi:fan',
+      media_player: 'mdi:television',
+      automation: 'mdi:robot',
+      script: 'mdi:script-text',
       lock: 'mdi:lock',
       camera: 'mdi:camera',
       sensor: 'mdi:gauge',
@@ -327,7 +333,8 @@ class CustomButtonCard extends LitElement {
     return 3;
   }
 
-  static getConfigElement() {
+  static async getConfigElement() {
+    await import('./custom-button-card-editor.js');
     return document.createElement('ios-button-card-editor');
   }
 
@@ -337,11 +344,9 @@ class CustomButtonCard extends LitElement {
       title: 'Button',
       show_name: true,
       show_icon: true,
-      interactions: {
-        tap_behaviour: 'toggle',
-        hold_behaviour: 'turn_off',
-        double_tap_behaviour: 'turn_on'
-      }
+      tap_action: { action: 'toggle' },
+      hold_action: { action: 'turn_off' },
+      double_tap_action: { action: 'turn_on' }
     };
   }
 }

@@ -84,10 +84,12 @@ icon_color: var(--primary-text-color)        # Inactive color
 active_icon_color: var(--accent-color)       # Active color
 show_icon: true                 # Show/hide icon
 show_name: true                 # Show/hide title
-interactions:
-  tap_behaviour: toggle         # Single click action
-  hold_behaviour: turn_off      # Long press action
-  double_tap_behaviour: turn_on # Double click action
+tap_action:
+  action: toggle
+hold_action:
+  action: turn_off
+double_tap_action:
+  action: turn_on
 ```
 
 **Behavior Options:** `toggle`, `turn_on`, `turn_off`, or empty string (`""`)
@@ -174,10 +176,12 @@ A: Open an issue on GitHub with your configuration and browser console errors.
   active_icon_color: '#FF6B6B'
   show_name: true
   show_icon: true
-  interactions:
-    tap_behaviour: toggle
-    hold_behaviour: turn_off
-    double_tap_behaviour: turn_on
+  tap_action:
+    action: toggle
+  hold_action:
+    action: turn_off
+  double_tap_action:
+    action: turn_on
 ```
 
 ## 📞 Support

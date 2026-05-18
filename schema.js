@@ -79,28 +79,15 @@ export const getConfigSchema = () => {
           type: 'grid',
           schema: [
             {
-              name: 'interactions.tap_behaviour',
+              name: 'tap_action',
               selector: {
-                select: {
-                  options: [
-                    { value: 'toggle', label: 'Toggle' },
-                    { value: 'turn_on', label: 'Turn On' },
-                    { value: 'turn_off', label: 'Turn Off' }
-                  ]
-                }
+                ui_action: {}
               }
             },
             {
-              name: 'interactions.hold_behaviour',
+              name: 'hold_action',
               selector: {
-                select: {
-                  options: [
-                    { value: '', label: 'None' },
-                    { value: 'toggle', label: 'Toggle' },
-                    { value: 'turn_on', label: 'Turn On' },
-                    { value: 'turn_off', label: 'Turn Off' }
-                  ]
-                }
+                ui_action: {}
               }
             }
           ]
@@ -109,16 +96,9 @@ export const getConfigSchema = () => {
           type: 'grid',
           schema: [
             {
-              name: 'interactions.double_tap_behaviour',
+              name: 'double_tap_action',
               selector: {
-                select: {
-                  options: [
-                    { value: '', label: 'None' },
-                    { value: 'toggle', label: 'Toggle' },
-                    { value: 'turn_on', label: 'Turn On' },
-                    { value: 'turn_off', label: 'Turn Off' }
-                  ]
-                }
+                ui_action: {}
               }
             }
           ]
