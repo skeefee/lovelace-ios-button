@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iOS Button Card - Local Development</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">  
+  <script type="importmap">
+    {
+      "imports": {
+        "lit-element": "https://cdn.skypack.dev/lit-element@2.5.1",
+        "lit-html": "https://cdn.skypack.dev/lit-html@1.4.1"
+      }
+    }
+  </script>
+  <script type="module" src="./custom-button-card.js"></script>
+  <script type="module" src="./custom-button-card-editor.js"></script>
+  <style>
+    :root {
+      --primary-color: #03a9f4;
+      --primary-text-color: #212121;
+      --divider-color: #e0e0e0;
+    }
+    body {
+      font-family: Roboto, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      color: var(--primary-text-color);
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { margin-top: 0; color: var(--primary-color); }
+    .section {
+      background: var(--card-background-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .section-title { font-size: 18px; font-weight: 600; margin-top: 0; margin-bottom: 16px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+      background: url(https://raw.githubusercontent.com/skeefee/hassio-dashboard/refs/heads/main/godis_background.webp);
+      color: #fff;
+      padding: 30px;
+    }
+    ios-button-card {
+      display: block;
+    }
+    .config-input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid var(--divider-color);
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 16px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 4px;
+    }
+    button:hover { opacity: 0.9; }
+    .console {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .console-log { margin: 4px 0; }
+    .console-log.error { color: #f48771; }
+    .console-log.info { color: #569cd6; }
+    .info {
+      background: #e3f2fd;
+      padding: 12px;
+      border-left: 4px solid var(--primary-color);
+      border-radius: 4px;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 iOS Button Card - Development</h1>
+
+    <div class="section">
+      <h2 class="section-title">State Manager</h2>
+      <div class="info">Update entity states and test interactions</div>
+      <input type="text" id="entityInput" class="config-input" placeholder="Entity ID" value="light.living_room" />
+      <input type="text" id="stateInput" class="config-input" placeholder="State (on/off)" value="off" />
+      <input type="text" id="nameInput" class="config-input" placeholder="Friendly Name" value="Living Room Light" />
+      <button onclick="updateState()">Update State</button>
+      <button onclick="clearConsole()">Clear Console</button>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Configuration</h2>
+      <textarea id="configTextarea" class="config-input" rows="12">{
+  "entity": "light.living_room",
+  "title": "Living Room",
+  "icon": "mdi:lightbulb",
+  "show_name": true,
+  "show_icon": true,
+  "interactions": {
+    "tap_behaviour": "toggle",
+    "hold_behaviour": "turn_off",
+    "double_tap_behaviour": "turn_on"
+  }
+}</textarea>
+      <button onclick="applyConfig()">Apply Config</button>
+      <button onclick="loadStubConfig()">Load Default</button>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Card Preview</h2>
+      <div class="grid">
+        <div>
+          <h3>Light (Off)</h3>
+          <ios-button-card id="card1"></ios-button-card>
+        </div>
+        <div>
+          <h3>Light (On)</h3>
+          <ios-button-card id="card2"></ios-button-card>
+        </div>
+        <div>
+          <h3>Switch</h3>
+          <ios-button-card id="card3"></ios-button-card>
+        </div>
+        <div>
+          <h3>Custom Config</h3>
+          <ios-button-card id="card4"></ios-button-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Debug Console</h2>
+      <div class="console" id="console"></div>
+    </div>
+  </div>
+
+  <script>
+    // Mock Home Assistant
+    window.hass = {
+      states: {
+        'light.living_room': {
+          entity_id: 'light.living_room',
+          state: 'off',
+          attributes: { friendly_name: 'Living Room Light' }
+        },
+        'light.bedroom': {
+          entity_id: 'light.bedroom',
+          state: 'on',
+          attributes: { friendly_name: 'Bedroom Light' }
+        },
+        'switch.fan': {
+          entity_id: 'switch.fan',
+          state: 'off',
+          attributes: { friendly_name: 'Ceiling Fan' }
+        }
+      },
+      callService: (domain, service, data) => {
+        const entityId = data.entity_id;
+        if (hass.states[entityId]) {
+          if (service === 'turn_on') hass.states[entityId].state = 'on';
+          else if (service === 'turn_off') hass.states[entityId].state = 'off';
+          updateAllCards();
+          addLog(`✓ ${service}(${entityId})`, 'info');
+        }
+      }
+    };
+
+    function addLog(msg, type = 'info') {
+      const consoleEl = document.getElementById('console');
+      const logEl = document.createElement('div');
+      logEl.className = `console-log ${type}`;
+      logEl.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      consoleEl.appendChild(logEl);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function updateState() {
+      const entityId = document.getElementById('entityInput').value;
+      const state = document.getElementById('stateInput').value;
+      const name = document.getElementById('nameInput').value;
+      if (!entityId) { addLog('Error: Entity ID required', 'error'); return; }
+      hass.states[entityId] = {
+        entity_id: entityId,
+        state: state,
+        attributes: { friendly_name: name || entityId }
+      };
+      updateAllCards();
+      addLog(`Updated ${entityId}`, 'info');
+    }
+
+    function clearConsole() {
+      document.getElementById('console').innerHTML = '';
+    }
+
+    function applyConfig() {
+      try {
+        const config = JSON.parse(document.getElementById('configTextarea').value);
+        const card = document.getElementById('card4');
+        if (card?.setConfig) {
+          card.setConfig(config);
+          card.hass = hass;
+          card.requestUpdate?.();
+          addLog('Config applied', 'info');
+        }
+      } catch (e) {
+        addLog(`Error: ${e.message}`, 'error');
+      }
+    }
+
+    function loadStubConfig() {
+      const config = {
+        entity: 'light.living_room',
+        title: 'Living Room',
+        icon: 'mdi:lightbulb',
+
+        show_name: true,
+        show_icon: true,
+        interactions: {
+          tap_behaviour: 'toggle',
+          hold_behaviour: 'turn_off',
+          double_tap_behaviour: 'turn_on'
+        }
+      };
+      document.getElementById('configTextarea').value = JSON.stringify(config, null, 2);
+      applyConfig();
+    }
+
+    function updateAllCards() {
+      [
+        { id: 'card1', entity: 'light.living_room', title: 'Living Room' },
+        { id: 'card2', entity: 'light.bedroom', title: 'Bedroom' },
+        { id: 'card3', entity: 'switch.fan', title: 'Ceiling Fan', icon: 'mdi:fan', icon_color: 'red' }
+      ].forEach(cfg => {
+        const card = document.getElementById(cfg.id);
+        if (card?.setConfig) {
+          card.setConfig({
+            entity: cfg.entity,
+            title: cfg.title,
+            icon: cfg.icon || undefined,
+            show_icon: true,
+            show_name: true
+          });
+          card.hass = hass;
+          card.requestUpdate?.();
+        }
+      });
+      loadStubConfig();
+    }
+
+    window.addEventListener('load', () => {
+      window.customElements.whenDefined('ios-button-card').then(() => {
+        addLog('Environment ready - CustomButtonCard loaded', 'info');
+        updateAllCards();
+      });
+    });
+  </script>
+
+

@@ -1,0 +1,32 @@
+{
+  "name": "ios-button-card",
+  "version": "1.0.0",
+  "description": "Home Assistant Custom Button Card with advanced interactions",
+  "main": "custom-button-card.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "dev": "webpack serve --mode development"
+  },
+  "keywords": [
+    "home-assistant",
+    "custom-card",
+    "lovelace",
+    "button"
+  ],
+  "author": "",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "babel-loader": "^9.1.2",
+    "lit-element": "^2.5.1",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "home-assistant-js-websocket": "^8.2.0",
+    "lit-html": "^2.8.0"
+  }
+}

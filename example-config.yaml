@@ -1,0 +1,206 @@
+# iOS Button Card - Example Configurations
+# Copy and paste these examples into your dashboard configuration
+
+# ============================================================================
+# Example 1: Simple Light Control
+# ============================================================================
+- type: ios-button-card
+  entity: light.living_room
+  title: Living Room Light
+  icon: mdi:lightbulb
+  show_name: true
+  show_icon: true
+
+# ============================================================================
+# Example 2: Switch with Custom Colors
+# ============================================================================
+- type: ios-button-card
+  entity: switch.coffee_machine
+  title: Coffee Maker
+  icon: mdi:coffee
+  icon_color: '#8B4513'
+  active_icon_color: '#FFD700'
+  show_name: true
+  show_icon: true
+  interactions:
+    tap_behaviour: turn_on
+    hold_behaviour: turn_off
+    double_tap_behaviour: ''
+
+# ============================================================================
+# Example 3: Advanced Interactions
+# ============================================================================
+- type: ios-button-card
+  entity: light.bedroom
+  title: Bedroom Lamp
+  icon: mdi:lamp
+  icon_color: var(--primary-text-color)
+  active_icon_color: '#FF6B6B'
+  show_name: true
+  show_icon: true
+  interactions:
+    tap_behaviour: toggle
+    hold_behaviour: turn_off
+    double_tap_behaviour: turn_on
+
+# ============================================================================
+# Example 4: Icon Only (No Text)
+# ============================================================================
+- type: ios-button-card
+  entity: fan.ceiling_fan
+  icon: mdi:fan
+  show_name: false
+  show_icon: true
+  interactions:
+    tap_behaviour: toggle
+    hold_behaviour: ''
+    double_tap_behaviour: ''
+
+# ============================================================================
+# Example 5: Text Only (No Icon)
+# ============================================================================
+- type: ios-button-card
+  entity: switch.garage_door
+  title: Garage Door
+  show_name: true
+  show_icon: false
+  interactions:
+    tap_behaviour: toggle
+    hold_behaviour: ''
+    double_tap_behaviour: ''
+
+# ============================================================================
+# Example 6: Climate Control
+# ============================================================================
+- type: ios-button-card
+  entity: climate.living_room
+  title: AC Unit
+  icon: mdi:thermostat
+  icon_color: '#4A90E2'
+  active_icon_color: '#FF4757'
+  show_name: true
+  show_icon: true
+  interactions:
+    tap_behaviour: toggle
+    hold_behaviour: turn_on
+    double_tap_behaviour: turn_off
+
+# ============================================================================
+# Example 7: Security Lock
+# ============================================================================
+- type: ios-button-card
+  entity: lock.front_door
+  title: Front Door
+  icon: mdi:lock
+  icon_color: '#666666'
+  active_icon_color: '#27AE60'
+  show_name: true
+  show_icon: true
+  interactions:
+    tap_behaviour: toggle
+    hold_behaviour: ''
+    double_tap_behaviour: ''
+
+# ============================================================================
+# Example 8: Camera
+# ============================================================================
+- type: ios-button-card
+  entity: camera.porch
+  title: Porch Camera
+  icon: mdi:camera
+  icon_color: '#999999'
+  active_icon_color: '#E74C3C'
+  show_name: true
+  show_icon: true
+
+# ============================================================================
+# Example 9: Media Control
+# ============================================================================
+- type: ios-button-card
+  entity: media_player.bedroom
+  title: Bedroom Speaker
+  icon: mdi:play
+  icon_color: '#3498DB'
+  active_icon_color: '#E74C3C'
+  show_name: true
+  show_icon: true
+  interactions:
+    tap_behaviour: toggle
+    hold_behaviour: ''
+    double_tap_behaviour: ''
+
+# ============================================================================
+# Example 10: Grid Layout (4 buttons in a row)
+# ============================================================================
+- type: grid
+  columns: 4
+  cards:
+    - type: ios-button-card
+      entity: light.kitchen
+      title: Kitchen
+      icon: mdi:lightbulb
+
+    - type: ios-button-card
+      entity: light.bedroom
+      title: Bedroom
+      icon: mdi:lightbulb
+
+    - type: ios-button-card
+      entity: light.bathroom
+      title: Bathroom
+      icon: mdi:lightbulb
+
+    - type: ios-button-card
+      entity: light.hallway
+      title: Hallway
+      icon: mdi:lightbulb
+
+# ============================================================================
+# Example 11: Using CSS Variables for Theming
+# ============================================================================
+- type: ios-button-card
+  entity: light.desk_lamp
+  title: Desk Lamp
+  icon: mdi:lamp
+  icon_color: var(--primary-text-color)
+  active_icon_color: var(--accent-color)
+  show_name: true
+  show_icon: true
+
+# ============================================================================
+# Example 12: Muted Colors
+# ============================================================================
+- type: ios-button-card
+  entity: switch.outdoor_lights
+  title: Outdoor Lights
+  icon: mdi:outdoor-lamp
+  icon_color: '#B0B0B0'
+  active_icon_color: '#F0C040'
+  show_name: true
+  show_icon: true
+
+# ============================================================================
+# Example 13: Accent Colors
+# ============================================================================
+- type: ios-button-card
+  entity: light.accent
+  title: Accent Light
+  icon: mdi:lightbulb
+  icon_color: '#9E9E9E'
+  active_icon_color: '#E91E63'
+  show_name: true
+  show_icon: true
+
+# ============================================================================
+# Example 14: No Interactions (Display Only)
+# ============================================================================
+- type: ios-button-card
+  entity: sensor.temperature
+  title: Temperature
+  icon: mdi:thermometer
+  show_name: true
+  show_icon: true
+  interactions:
+    tap_behaviour: ''
+    hold_behaviour: ''
+    double_tap_behaviour: ''
