@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import './custom-button-card-editor.js';
 
 class CustomButtonCard extends LitElement {
   static get properties() {
