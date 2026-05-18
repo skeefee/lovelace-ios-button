@@ -4,7 +4,6 @@ module.exports = {
   mode: 'development',
   entry: {
     'ios-button-card': './custom-button-card.js',
-    'ios-button-card-editor': './custom-button-card-editor.js',
   },
   output: {
     filename: '[name].js',

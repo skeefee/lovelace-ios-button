@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import './custom-button-card-editor.js';
 
 class CustomButtonCard extends LitElement {
   static get properties() {
@@ -333,8 +334,7 @@ class CustomButtonCard extends LitElement {
     return 3;
   }
 
-  static async getConfigElement() {
-    await import('./custom-button-card-editor.js');
+  static getConfigElement() {
     return document.createElement('ios-button-card-editor');
   }
 
