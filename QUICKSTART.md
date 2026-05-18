@@ -87,12 +87,12 @@ show_name: true                 # Show/hide title
 tap_action:
   action: toggle
 hold_action:
-  action: turn_off
+  action: more-info
 double_tap_action:
-  action: turn_on
+  action: more-info
 ```
 
-**Behavior Options:** `toggle`, `turn_on`, `turn_off`, or empty string (`""`)
+**Behavior Options:** `toggle`, `more-info`, `call-service`, `none`
 
 ## 🌐 Common Entity Types
 
@@ -179,9 +179,9 @@ A: Open an issue on GitHub with your configuration and browser console errors.
   tap_action:
     action: toggle
   hold_action:
-    action: turn_off
+    action: more-info
   double_tap_action:
-    action: turn_on
+    action: none
 ```
 
 ## 📞 Support

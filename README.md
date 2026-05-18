@@ -70,11 +70,11 @@ active_icon_color: var(--accent-color)
 show_name: true
 show_icon: true
 tap_action:
-  action: toggle
+  action: more-info
 hold_action:
-  action: turn_off
+  action: more-info
 double_tap_action:
-  action: turn_on
+  action: more-info
 ```
 
 ### Configuration Options
@@ -100,9 +100,9 @@ double_tap_action:
 
 | Option | Type | Values | Description |
 |--------|------|--------|-------------|
-| `tap_action.action` | `string` | `toggle`, `turn_on`, `turn_off`, `more-info`, `none` | Action when tapped |
-| `hold_action.action` | `string` | `toggle`, `turn_on`, `turn_off`, `more-info`, `none` | Action when held (500ms+) |
-| `double_tap_action.action` | `string` | `toggle`, `turn_on`, `turn_off`, `more-info`, `none` | Action when double-tapped |
+| `tap_action.action` | `string` | `toggle`, `more-info`, `call-service`, `none` | Action when tapped |
+| `hold_action.action` | `string` | `toggle`, `more-info`, `call-service`, `none` | Action when held (500ms+) |
+| `double_tap_action.action` | `string` | `toggle`, `more-info`, `call-service`, `none` | Action when double-tapped |
 
 ## Usage Examples
 
@@ -118,7 +118,7 @@ show_icon: true
 tap_action:
   action: toggle
 hold_action:
-  action: turn_off
+  action: more-info
 double_tap_action:
   action: none
 ```
@@ -144,9 +144,9 @@ icon: mdi:thermostat
 tap_action:
   action: toggle
 hold_action:
-  action: turn_on
+  action: more-info
 double_tap_action:
-  action: turn_off
+  action: none
 ```
 
 ### Fan Control

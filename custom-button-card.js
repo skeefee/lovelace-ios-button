@@ -279,8 +279,7 @@ class CustomButtonCard extends LitElement {
   }
 
   _toggleEntity() {
-    const action = this.isActive ? 'turn_off' : 'turn_on';
-    this.hass.callService('homeassistant', 'turn_on', {
+    this.hass.callService('homeassistant', 'toggle', {
       entity_id: this.config.entity
     });
   }
@@ -291,10 +290,6 @@ class CustomButtonCard extends LitElement {
 
     if (action === 'toggle') {
       this._toggleEntity();
-    } else if (action === 'turn_on') {
-      this.hass.callService('homeassistant', 'turn_on', { entity_id: this.config.entity });
-    } else if (action === 'turn_off') {
-      this.hass.callService('homeassistant', 'turn_off', { entity_id: this.config.entity });
     } else if (action === 'more-info') {
       this.dispatchEvent(new CustomEvent('hass-more-info', {
         detail: { entityId: this.config.entity },
@@ -345,8 +340,8 @@ class CustomButtonCard extends LitElement {
       show_name: true,
       show_icon: true,
       tap_action: { action: 'toggle' },
-      hold_action: { action: 'turn_off' },
-      double_tap_action: { action: 'turn_on' }
+      hold_action: { action: 'more-info' },
+      double_tap_action: { action: 'none' }
     };
   }
 }

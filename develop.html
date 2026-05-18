@@ -116,11 +116,9 @@
   "icon": "mdi:lightbulb",
   "show_name": true,
   "show_icon": true,
-  "interactions": {
-    "tap_behaviour": "toggle",
-    "hold_behaviour": "turn_off",
-    "double_tap_behaviour": "turn_on"
-  }
+  "tap_action": { "action": "toggle" },
+  "hold_action": { "action": "more-info" },
+  "double_tap_action": { "action": "none" }
 }</textarea>
       <button onclick="applyConfig()">Apply Config</button>
       <button onclick="loadStubConfig()">Load Default</button>
@@ -177,10 +175,11 @@
       callService: (domain, service, data) => {
         const entityId = data.entity_id;
         if (hass.states[entityId]) {
-          if (service === 'turn_on') hass.states[entityId].state = 'on';
-          else if (service === 'turn_off') hass.states[entityId].state = 'off';
+          if (service === 'toggle') {
+            hass.states[entityId].state = hass.states[entityId].state === 'on' ? 'off' : 'on';
+          }
           updateAllCards();
-          addLog(`✓ ${service}(${entityId})`, 'info');
+          addLog(`✓ ${domain}.${service}(${entityId})`, 'info');
         }
       }
     };
@@ -235,11 +234,9 @@
 
         show_name: true,
         show_icon: true,
-        interactions: {
-          tap_behaviour: 'toggle',
-          hold_behaviour: 'turn_off',
-          double_tap_behaviour: 'turn_on'
-        }
+        tap_action: { action: 'toggle' },
+        hold_action: { action: 'more-info' },
+        double_tap_action: { action: 'none' }
       };
       document.getElementById('configTextarea').value = JSON.stringify(config, null, 2);
       applyConfig();
