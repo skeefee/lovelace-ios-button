@@ -1,5 +1,8 @@
 {
-  "name": "iOS Button Card",
-  "render_readme": true,
-  "filename": "ios-button-card.js"
+	"name": "iOS Button Card",
+	"content_in_root": true,
+	"homeassistant": "2023.9.0",
+	"filename": "ios-button-card.js",
+	"render_readme": true,
+	"hide_default_branch": true
 }
