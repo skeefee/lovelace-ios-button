@@ -32,13 +32,13 @@ class CustomButtonCard extends LitElement {
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 16px;
-        border-radius: 24px;
+        padding: 11px 14px;
+        border-radius: 16px;
         background-color: var(--custom-button-background);
         cursor: pointer;
         user-select: none;
         transition: all 0.2s ease;
-        gap: 16px;
+        gap: 14px;
       }
 
       .button-card:active {
@@ -51,14 +51,14 @@ class CustomButtonCard extends LitElement {
       }
 
       .button-icon {
-        font-size: 32px;
+        font-size: 24px;
         color: var(--custom-button-icon-color);
         transition: color 0.3s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 28px;
-        height: 28px;
+        width: 20px;
+        height: 20px;
       }
       .button-icon ha-icon, .button-icon i {
         color: var(--custom-button-icon-color);
@@ -75,7 +75,7 @@ class CustomButtonCard extends LitElement {
       .button-text {
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 0;
         text-transform: capitalize;
         
       }
