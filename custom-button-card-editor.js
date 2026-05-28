@@ -7,8 +7,18 @@ const SCHEMA = [
     selector: { entity: {} },
   },
   {
-    name: 'title',
-    selector: { text: {} },
+    type: 'grid',
+    name: '',
+    schema: [
+      {
+        name: 'title',
+        selector: { text: {} },
+      },
+      {
+        name: 'remove_text',
+        selector: { text: {} },
+      },
+    ],
   },
   {
     type: 'grid',
@@ -41,6 +51,7 @@ const SCHEMA = [
 const LABELS = {
   entity: 'Entity',
   title: 'Title',
+  remove_text: 'Remove Text',
   icon: 'Icon',
   icon_color: 'Icon Color',
   show_icon: 'Show Icon',

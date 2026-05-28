@@ -111,9 +111,9 @@
     <div class="section">
       <h2 class="section-title">Configuration</h2>
       <textarea id="configTextarea" class="config-input" rows="12">{
-  "entity": "light.living_room",
-  "title": "Living Room",
-  "icon": "mdi:lightbulb",
+  "entity": "media_player.living_room_tv",
+  "remove_text": " TV",
+  "icon": "mdi:television",
   "show_name": true,
   "show_icon": true,
   "tap_action": { "action": "toggle" },
@@ -138,6 +138,10 @@
         <div>
           <h3>Switch</h3>
           <ios-button-card id="card3"></ios-button-card>
+        </div>
+        <div>
+          <h3>Remove Text Example</h3>
+          <ios-button-card id="cardRemoveText"></ios-button-card>
         </div>
         <div>
           <h3>Custom Config</h3>
@@ -170,6 +174,11 @@
           entity_id: 'switch.fan',
           state: 'off',
           attributes: { friendly_name: 'Ceiling Fan' }
+        },
+        'media_player.living_room_tv': {
+          entity_id: 'media_player.living_room_tv',
+          state: 'off',
+          attributes: { friendly_name: 'Living Room TV' }
         }
       },
       callService: (domain, service, data) => {
@@ -228,10 +237,9 @@
 
     function loadStubConfig() {
       const config = {
-        entity: 'light.living_room',
-        title: 'Living Room',
-        icon: 'mdi:lightbulb',
-
+        entity: 'media_player.living_room_tv',
+        remove_text: ' TV',
+        icon: 'mdi:television',
         show_name: true,
         show_icon: true,
         tap_action: { action: 'toggle' },
@@ -246,13 +254,15 @@
       [
         { id: 'card1', entity: 'light.living_room', title: 'Living Room' },
         { id: 'card2', entity: 'light.bedroom', title: 'Bedroom' },
-        { id: 'card3', entity: 'switch.fan', title: 'Ceiling Fan', icon: 'mdi:fan', icon_color: 'red' }
+        { id: 'card3', entity: 'switch.fan', title: 'Ceiling Fan', icon: 'mdi:fan', icon_color: 'red' },
+        { id: 'cardRemoveText', entity: 'media_player.living_room_tv', remove_text: ' TV', icon: 'mdi:television' }
       ].forEach(cfg => {
         const card = document.getElementById(cfg.id);
         if (card?.setConfig) {
           card.setConfig({
             entity: cfg.entity,
             title: cfg.title,
+            remove_text: cfg.remove_text || undefined,
             icon: cfg.icon || undefined,
             show_icon: true,
             show_name: true

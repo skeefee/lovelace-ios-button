@@ -77,6 +77,12 @@ double_tap_action:
   action: more-info
 ```
 
+**Note:** The `title` field supports Jinja2 templates. You can use `this.entity_id` as a placeholder for the entity ID:
+
+```yaml
+title: "{{ states['this.entity_id'].attributes.friendly_name | replace(' TV', '') }}"
+```
+
 ### Configuration Options
 
 #### Basic Options
@@ -85,6 +91,7 @@ double_tap_action:
 |--------|------|---------|-------------|
 | `entity` | `string` | **required** | Home Assistant entity ID |
 | `title` | `string` | Entity friendly name | Display title for the button |
+| `remove_text` | `string` or `array` | - | Text to remove from the title (e.g., `" TV"` or `[" Light", " Switch"]`) |
 | `icon` | `string` | Auto-detected | MDI icon name (e.g., `mdi:lightbulb`) |
 
 #### Styling Options
@@ -158,6 +165,19 @@ title: Ceiling Fan
 icon: mdi:fan
 show_name: true
 show_icon: true
+```
+
+### Media Player with Text Removal
+
+```yaml
+type: ios-button-card
+entity: media_player.living_room_tv
+remove_text: " TV"
+icon: mdi:television
+tap_action:
+  action: toggle
+hold_action:
+  action: more-info
 ```
 
 ## CSS Customization

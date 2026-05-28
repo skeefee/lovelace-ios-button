@@ -171,9 +171,21 @@ class CustomButtonCard extends LitElement {
     const stateObj = this.hass.states[this.config.entity];
     if (!stateObj) return;
 
-    const configTitle = this.config.title || this.getEntityFriendlyName(stateObj);
-    this._renderedTitle = await this._renderTemplate(configTitle);
-
+    let configTitle = this.config.title || this.getEntityFriendlyName(stateObj);
+    configTitle = await this._renderTemplate(configTitle);
+    
+    // Apply remove_text filter if configured
+    if (this.config.remove_text) {
+      const textToRemove = Array.isArray(this.config.remove_text) 
+        ? this.config.remove_text 
+        : [this.config.remove_text];
+      
+      for (const text of textToRemove) {
+        configTitle = configTitle.replace(text, '');
+      }
+    }
+    
+    this._renderedTitle = configTitle;
     this.requestUpdate();
   }
 
