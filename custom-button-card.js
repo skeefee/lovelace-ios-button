@@ -152,10 +152,13 @@ class CustomButtonCard extends LitElement {
     }
 
     try {
+      // Replace this.entity_id with the actual entity ID
+      let processedTemplate = templateString.replace(/this\.entity_id/g, `'${this.config.entity}'`);
+      
       // Use Home Assistant's template rendering websocket API
       const result = await this.hass.callWS({
         type: 'template/render',
-        template: templateString
+        template: processedTemplate
       });
       return result;
     } catch (error) {
