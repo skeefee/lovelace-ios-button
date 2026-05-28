@@ -118,6 +118,7 @@ class CustomButtonCard extends LitElement {
     this._pressTimer = null;
     this._tapCount = 0;
     this._tapTimer = null;
+    this._renderedTitle = '';
   }
 
   setConfig(config) {
@@ -140,6 +141,46 @@ class CustomButtonCard extends LitElement {
     }
   }
 
+  async _renderTemplate(templateString) {
+    if (!templateString || typeof templateString !== 'string') {
+      return templateString;
+    }
+
+    // Check if it looks like a template
+    if (!templateString.includes('{{') || !templateString.includes('}}')) {
+      return templateString;
+    }
+
+    try {
+      // Use Home Assistant's template rendering websocket API
+      const result = await this.hass.callWS({
+        type: 'template/render',
+        template: templateString
+      });
+      return result;
+    } catch (error) {
+      console.warn('Template rendering error:', error);
+      return templateString; // Return original if rendering fails
+    }
+  }
+
+  async _updateRenderedValues() {
+    const stateObj = this.hass.states[this.config.entity];
+    if (!stateObj) return;
+
+    const configTitle = this.config.title || this.getEntityFriendlyName(stateObj);
+    this._renderedTitle = await this._renderTemplate(configTitle);
+
+    this.requestUpdate();
+  }
+
+  updated(changedProperties) {
+    // Re-render templates when entity state or config changes
+    if (changedProperties.has('hass') || changedProperties.has('config')) {
+      this._updateRenderedValues();
+    }
+  }
+
   render() {
     if (!this.hass || !this.config) {
       return html`<div>Loading...</div>`;
@@ -152,10 +193,14 @@ class CustomButtonCard extends LitElement {
 
     this.isActive = stateObj.state === 'on';
 
+    // Update rendered values if needed
+    if (!this._renderedTitle) {
+      this._updateRenderedValues();
+    }
+
     const showIcon = this.config.show_icon !== false;
     const showName = this.config.show_name !== false;
     const showState = this.config.show_state !== false;
-    const title = this.config.title || this.getEntityFriendlyName(stateObj);
     const icon = this.config.icon || this.getEntityIcon(stateObj);
     const stateText = typeof this.config.show_state === 'string'
       ? this.config.show_state
@@ -183,7 +228,7 @@ class CustomButtonCard extends LitElement {
         ${showName || showState
           ? html`
               <div class="button-text">
-                ${showName ? html`<div class="button-label">${title}</div>` : ''}
+                ${showName ? html`<div class="button-label">${this._renderedTitle}</div>` : ''}
                 ${showState ? html`<div class="button-state">${stateText}</div>` : ''}
               </div>
             `
